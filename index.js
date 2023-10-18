@@ -38,7 +38,9 @@ async function run() {
 
 
     app.get('/products', async (req, res) => {
-        
+        const cursor = productsCollection.find();
+        const result = await cursor.toArray();
+        res.send(result)
     })
 
 
