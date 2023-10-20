@@ -28,12 +28,19 @@ async function run() {
     await client.connect();
 
     const productsCollection = client.db("touchupDB").collection("products");
+    const productsCollectionTwo = client.db("touchupDB").collection("cardInfo");
 
     app.get("/products", async (req, res) => {
       const cursor = productsCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
+
+    app.get("/cardInfo", async (req, res) => {
+      const cursor = productsCollectionTwo.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
 
     app.get("/products/:id", async (req, res) => {
       const id = req.params.id;
@@ -56,6 +63,13 @@ async function run() {
       const result = await productsCollection.insertOne(newProduct);
       res.send(result);
     });
+
+    app.post("/cardInfo", async (req, res) => {
+      const cardInfo = req.body;
+      console.log(cardInfo);
+      const result = await productsCollectionTwo.insertOne(cardInfo);
+      res.send(result);
+    })
 
     app.put("/products/:id", async (req, res) => {
       const id = req.params.id;
