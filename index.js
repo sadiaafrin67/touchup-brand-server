@@ -40,7 +40,7 @@ async function run() {
       const cursor = productsCollectionTwo.find();
       const result = await cursor.toArray();
       res.send(result);
-    })
+    });
 
     app.get("/products/:id", async (req, res) => {
       const id = req.params.id;
@@ -69,7 +69,17 @@ async function run() {
       console.log(cardInfo);
       const result = await productsCollectionTwo.insertOne(cardInfo);
       res.send(result);
+    });
+
+    app.delete("/cardInfo/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await productsCollectionTwo.deleteOne(query);
+      res.send(result);
+      // console.log(result);
     })
+
+   
 
     app.put("/products/:id", async (req, res) => {
       const id = req.params.id;
